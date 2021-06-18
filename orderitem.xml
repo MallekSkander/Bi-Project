@@ -1,0 +1,50 @@
+<Schema name="OrderItem">
+  <Cube name="Cube OLAP" visible="true" cache="true" enabled="true">
+    <Table name="fact_table" alias="">
+    </Table>
+    <Dimension type="TimeDimension" visible="true" foreignKey="DateId" name="Date">
+      <Hierarchy name="Time" visible="true" hasAll="true" primaryKey="Id" primaryKeyTable="date_dim">
+        <Table name="date_dim" alias="">
+        </Table>
+        <Level name="Year" visible="true" table="date_dim" column="Year" nameColumn="Year" type="Integer" internalType="int" uniqueMembers="false" levelType="TimeYears">
+        </Level>
+        <Level name="Mounth" visible="true" table="date_dim" column="Month" nameColumn="Month" type="Integer" uniqueMembers="false" levelType="TimeMonths">
+        </Level>
+        <Level name="Day" visible="true" table="date_dim" column="Day" nameColumn="Day" type="String" uniqueMembers="false" levelType="TimeDays">
+        </Level>
+        <Level name="Quarter" visible="true" table="date_dim" column="Quarter" nameColumn="Quarter" type="Integer" uniqueMembers="false" levelType="TimeQuarters">
+        </Level>
+        <Level name="DaySection" visible="true" table="date_dim" column="DaySection" nameColumn="DaySection" type="String" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="Productid" name="Product">
+      <Hierarchy name="Product" visible="true" hasAll="true" primaryKey="Productid" primaryKeyTable="product_dim">
+        <Table name="product_dim" alias="">
+        </Table>
+        <Level name="ProductName" visible="true" table="product_dim" column="ProductName" nameColumn="ProductName" type="String" uniqueMembers="false">
+        </Level>
+        <Level name="UnitPrice" visible="true" table="product_dim" column="UnitPrice" nameColumn="UnitPrice" type="Numeric" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="CustomerId" name="Customer">
+      <Hierarchy name="Customer" visible="true" hasAll="true" primaryKey="Id" primaryKeyTable="customer_dim">
+        <Table name="customer_dim" alias="">
+        </Table>
+        <Level name="Name" visible="true" table="customer_dim" column="Name" nameColumn="Name" type="String" uniqueMembers="false">
+        </Level>
+        <Level name="Address" visible="true" table="customer_dim" column="Adress" nameColumn="Adress" type="String" uniqueMembers="false">
+        </Level>
+        <Level name="City" visible="true" table="customer_dim" column="City" nameColumn="City" type="String" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Sum_Order" column="Quantity" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Sum_AmmountPerProduct " column="AmmountPerProduct" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="AVG_Order" column="Quantity" aggregator="avg" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
